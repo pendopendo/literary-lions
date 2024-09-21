@@ -1,4 +1,4 @@
-
+katsetussestvscodejarepodonimelikud
 ### General
 - [ ] Bonuses not listed in the bonus part
 - [ ] Only allowed packages are used.
