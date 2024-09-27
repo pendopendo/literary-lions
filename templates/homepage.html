@@ -3,22 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forum</title>
-    <link rel="stylesheet" href="/literary-lions-forum/static/css/style.css" />
+    <title>Literary Lions Forum</title>
+    <!-- <link rel="stylesheet" href="/literary-lions/static/css/style.css" /> -->
+    <link rel="stylesheet" href="/static/css/style.css" />
   </head>
   <body>
     <div id="container">
       <div id="header" class="items">
         <a href="/" class="post-link">
-          <h1 id="title">Forum</h1>
-        </a>
-        <a href="/createPost" id="cPB">
-          <button id="createPostButton">Create Post</button>
+          <h2 id="title">Literary Lions Forum</h2>
         </a>
       </div>
       <div id="posts" class="items">
+        <a href="/createPost" id="createPost">
+          <button id="createPostButton">Create Post</button>
+        </a>
         <div id="postsHeader">
-          <h2>Top Posts</h2>
+          <h2>Popular Now</h2>
         </div>
         <div class="postsContainer">
           {{ range .Posts }}
@@ -32,8 +33,8 @@
           {{ end }}
         </div>
       </div>
-      <div id="side" class="items left">
-        <div class="leftHeader">
+      <div id="categoriesContainer" class="items">
+        <div class="categoriesHeader">
           <h2>Top Categories</h2>
         </div>
         <div class="postsContainer">
@@ -46,18 +47,15 @@
           {{ end }}
         </div>
       </div>
-      <div id="profile" class="items left">
-        <div id="profileHeader">
-          <h2>Profile</h2>
-        </div>
-        <a href="/profile/posts" class="buttonP">
-          <div id="profilePosts" class="profileStuff">
-            <h3>Posts</h3>
+      <div id="profileBox" class="items">
+        <a href="/login" class="buttonLogin">
+          <div id="login" class="profileStuff">
+            <h3>Login</h3>
           </div>
         </a>
-        <a href="/profile/likes" class="buttonL">
-          <div id="profileLikes" class="profileStuff">
-            <h3>Likes</h3>
+        <a href="/register" class="buttonRegister">
+          <div id="register" class="profileStuff">
+            <h3>Register</h3>
           </div>
         </a>
       </div>

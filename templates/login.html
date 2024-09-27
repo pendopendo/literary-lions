@@ -1,15 +1,47 @@
-{{ define "content" }}
-<section class="form-section">
-    <h2>Login</h2>
-    <form action="/login" method="POST">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register">Register here</a></p>
-</section>
-{{ end }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in - Literary Lions Forum</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="header" class="items">
+        <a href="/" class="post-link">
+          <h2 id="title">Literary Lions Forum</h2>
+        </a>
+      </div>
+      <div id="loginBox" class="items">
+        <div id="loginHeader">
+          <h2>Login</h2>
+        </div>
+        <form id="loginDetails" action="/login" method="post">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div id="error">{{ . }}</div>
+          <button id="submitButton" type="submit">Log in</button>
+        </form>
+      </div>
+      <div id="profileBox" class="items">
+        <a href="/login" class="buttonLogin">
+          <div id="login" class="profileStuff">
+            <h3>Login</h3>
+          </div>
+        </a>
+        <a href="/register" class="buttonRegister">
+          <div id="register" class="profileStuff">
+            <h3>Register</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

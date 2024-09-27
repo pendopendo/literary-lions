@@ -90,7 +90,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		{
 			Title:    "Programming for dummies",
 			Category: "Science",
-			Content:  "türa",
+			Content:  "kasuta chatgpt-d lihtsalt",
 		},
 		{
 			Title:    "Miljon Miksi",
@@ -100,7 +100,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		{
 			Title:    "We're cooked",
 			Category: "Pop Culture",
-			Content:  "Deez nuts",
+			Content:  "hehee",
 		},
 	}
 	categories := []string{"Crime", "Science", "Drama"}
