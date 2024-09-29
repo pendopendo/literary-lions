@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+    <div id="container">
+        <div id="header" class="items">
+            <a href="/" class="post-link">
+                <h2 id="title">Literary Lions Forum</h2>
+            </a>
+        </div>
+        
+        <div id="registerSection" class="items bordered">
+            <h2>Register</h2>
+            <span style="color:green">{{.Message}}</span>
+            <form action="/register" method="POST">
+                <label for="email">Email:</label><br>
+                <input class="input-box white-box" type="text" id="email" name="email" value="{{.Email}}"><br>
+                {{with .FieldErrors.email}}
+                <label class="error">{{.}}</label><br>
+                {{end}}
+                
+                <label for="username">Username:</label><br>
+                <input class="input-box white-box" type="text" id="username" name="username" value="{{.Username}}"><br>
+                {{with .FieldErrors.username}}
+                <label class="error">{{.}}</label><br>
+                {{end}}
+                
+                <label for="password">Password:</label><br>
+                <input class="input-box white-box" type="password" id="password" name="password"><br><br>
+                {{with .FieldErrors.password}}
+                <label class="error">{{.}}</label><br>
+                {{end}}
+                
+                <button class="button click-button" type="submit">Submit</button>
+            </form>
+            
+            <div style="padding: 8px;"></div>
+            <div class="link-container click-button">
+                <a class="link" href="/login">Already have an account?</a>
+            </div>
+            <div style="padding: 8px;"></div>
+        </div>
+    </div>
+</body>
+</html>

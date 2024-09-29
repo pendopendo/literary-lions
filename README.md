@@ -1,10 +1,13 @@
-katsetussestvscodejarepodonimelikud
-### General
+# Literary Lions Forum
+
+## General
+
 - [ ] Bonuses not listed in the bonus part
 - [ ] Only allowed packages are used.
 - [ ] Server uses correct HTTP methods (GET, POST, PUT, etc.).
 
-### Site functionality
+## Site functionality
+
 - [ ] Sessions implemented for user persistence. (Cookies)
 - [ ] Multiple browser sessions function correctly.
 - [ ] Empty posts and comments not allowed.
@@ -18,7 +21,8 @@ katsetussestvscodejarepodonimelikud
 - [ ] Categories effective in organizing discussions. [Extra]
 - [ ] Easy to respond to posts and comments. [Extra]
 
-### SQLite
+## SQLite
+
 - [ ] Database designed with an Entity Relationship Diagram (ERD).
 - [ ] Code uses at least one SELECT query.
 - [ ] Code uses at least one CREATE query.
@@ -29,7 +33,8 @@ katsetussestvscodejarepodonimelikud
 - [ ] SQL queries effective and efficient. [Extra]
 - [ ] Update README with new ERD image
 
-### Registration and login
+## Registration and login
+
 - [ ] Registration requires email, username, and password.
 - [ ] Incorrect email or password detected during login.
 - [ ] Registered users can log in and access features.
@@ -39,14 +44,16 @@ katsetussestvscodejarepodonimelikud
 - [ ] User-friendly and secure registration process. [Extra]
 - [ ] Passwords secured and encrypted using bcrypt or other strong algorithms. [Extra]
 
-### User Interaction
+## User Interaction
+
 - [ ] Only registered users can create posts and comments.
 - [ ] Posts can be associated with categories.
 - [ ] Only registered users can like or dislike posts and comments.
 - [ ] Registered users can view their created and liked posts.
 - [ ] Users have access to profile pages. [Extra]
 
-### Error Handling
+## Error Handling
+
 - [ ] Server uses appropriate HTTP response codes (2XX)
 - [ ] Server uses appropriate HTTP respince code for (4XX)
 - [ ] All pages function correctly (no unhandled 404 errors).
@@ -55,8 +62,8 @@ katsetussestvscodejarepodonimelikud
 - [ ] Server behaves as expected (no crashes). - have to check for Database concurrency
 - [ ] Informative and user-friendly error messages. [Extra]
 
-### Docker Integration
+## Docker Integration
+
 - [ ] Docker image can be built successfully using Dockerfile.
 - [ ] Container runs successfully using created image.
 - [ ] Project has no unused Docker objects.
-

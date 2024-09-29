@@ -2,7 +2,8 @@ package main
 
 import (
 	"database/sql"
-	"literary-lions-forum/handlers"
+	"literary-lions/database"
+	"literary-lions/handlers"
 	"log"
 	"net/http"
 
@@ -13,12 +14,14 @@ var db *sql.DB
 
 func main() {
 	var err error
-	db, err = sql.Open("sqlite3", "./forum.db")
+	db, err = sql.Open("sqlite3", "./database/forum.db")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer db.Close()
+
+	database.InitSQLDB(db)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))

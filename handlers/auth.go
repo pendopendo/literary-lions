@@ -3,9 +3,9 @@ package handlers
 import (
 	"database/sql"
 	"fmt"
-	"literary-lions-forum/models"
+	"html/template"
+	"literary-lions/models"
 	"net/http"
-	"text/template"
 	"time"
 )
 
@@ -41,16 +41,16 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Redirect(w, r, "pages/login", http.StatusSeeOther)
 	} else {
-		tmpl := template.Must(template.ParseFiles("templates/register.html"))
+		tmpl := template.Must(template.ParseFiles("pages/register.html"))
 		tmpl.Execute(w, nil)
 	}
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		tmpl := template.Must(template.ParseFiles("templates/login.html"))
+		tmpl := template.Must(template.ParseFiles("pages/login.html"))
 		tmpl.Execute(w, nil)
 	} else if r.Method == http.MethodPost {
 		r.ParseForm()
@@ -107,7 +107,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 		// Create a new template
-		tmpl, err := template.ParseFiles("templates/homepage.html")
+		tmpl, err := template.ParseFiles("pages/homepage.html")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

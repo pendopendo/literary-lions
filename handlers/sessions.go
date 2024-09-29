@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"database/sql"
-	"literary-lions-forum/models"
+	"literary-lions/models"
 	"net/http"
 	"time"
 

@@ -21,10 +21,11 @@ body {
     border-radius: 30px;
     color: whitesmoke;
     scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 /* Hide scrollbar for all elements */
-::-webkit-scrollbar {
+.items::-webkit-scrollbar {
     display: none;
     /* Safari and Chrome */
 }
@@ -205,6 +206,7 @@ body {
 }
 
 .postsContainer {
+    overflow: hidden;
     overflow: clip;
     grid-column: 1 / 3;
 }

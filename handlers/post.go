@@ -1,15 +1,15 @@
 package handlers
 
 import (
-	"literary-lions-forum/models"
+	"html/template"
+	"literary-lions/models"
 	"net/http"
 	"strconv"
-	"text/template"
 )
 
 func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		tmpl := template.Must(template.ParseFiles("templates/create_post.html"))
+		tmpl := template.Must(template.ParseFiles("pages/create_post.html"))
 		tmpl.Execute(w, nil)
 	} else if r.Method == http.MethodPost {
 		r.ParseForm()
@@ -35,7 +35,7 @@ func ViewPostsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl := template.Must(template.ParseFiles("templates/posts.html"))
+	tmpl := template.Must(template.ParseFiles("templates/post.html"))
 	tmpl.Execute(w, posts)
 }
 
@@ -53,7 +53,7 @@ func FilterPostsByCategoryHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl := template.Must(template.ParseFiles("templates/posts.html"))
+	tmpl := template.Must(template.ParseFiles("templates/post.html"))
 	tmpl.Execute(w, posts)
 }
 
@@ -65,7 +65,7 @@ func FilterPostsByUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl := template.Must(template.ParseFiles("templates/posts.html"))
+	tmpl := template.Must(template.ParseFiles("templates/post.html"))
 	tmpl.Execute(w, posts)
 }
 
@@ -77,6 +77,6 @@ func FilterLikedPostsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl := template.Must(template.ParseFiles("templates/posts.html"))
+	tmpl := template.Must(template.ParseFiles("templates/post.html"))
 	tmpl.Execute(w, posts)
 }
