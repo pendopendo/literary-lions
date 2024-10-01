@@ -5,6 +5,8 @@ import (
 	"log"
 )
 
+var DB *sql.DB
+
 // generates the tables in the database
 func InitSQLDB(db *sql.DB) {
 	// Create the users table
@@ -13,7 +15,8 @@ func InitSQLDB(db *sql.DB) {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			email TEXT UNIQUE NOT NULL,
 			username TEXT UNIQUE NOT NULL,
-			password TEXT NOT NULL
+			password TEXT NOT NULL,
+			bio TEXT
 		);
 	`)
 	if err != nil {
@@ -23,7 +26,7 @@ func InitSQLDB(db *sql.DB) {
 	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS sessions (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			token TEXT NOT NULL,
+			session_token TEXT NOT NULL,
 			user_id INTEGER NOT NULL,
 			expires_at DATETIME NOT NULL,
 			FOREIGN KEY(user_id) REFERENCES users(id)

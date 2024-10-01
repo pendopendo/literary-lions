@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
+	"literary-lions/database"
 	"literary-lions/models"
+	"log"
 	"net/http"
 	"time"
 )
@@ -20,8 +21,6 @@ type MainPage struct {
 	Categories []string
 }
 
-var db *sql.DB
-
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		username := r.FormValue("username")
@@ -35,7 +34,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Pass the db connection to the CreateUser function
-		err = models.CreateUser(db, username, email, hashedPassword)
+		err = models.CreateUser(database.DB, username, email, hashedPassword)
 		if err != nil {
 			http.Error(w, "Failed to register user", http.StatusInternalServerError)
 			return
@@ -57,13 +56,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 
-		user, err := models.AuthenticateUser(db, email, password)
+		user, err := models.AuthenticateUser(database.DB, email, password)
 		if err != nil {
+			log.Println("auth error", err)
 			http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 			return
 		}
 
-		sessionToken, err := models.CreateSession(db, user.ID)
+		sessionToken, err := models.CreateSession(database.DB, user.ID)
 		if err != nil {
 			http.Error(w, "Failed to create session", http.StatusInternalServerError)
 			return

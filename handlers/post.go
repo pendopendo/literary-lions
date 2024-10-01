@@ -2,12 +2,14 @@ package handlers
 
 import (
 	"html/template"
+	"literary-lions/database"
 	"literary-lions/models"
 	"net/http"
 	"strconv"
 )
 
 func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
+	//if authenticated siis jah, kui mitte mine logini
 	if r.Method == http.MethodGet {
 		tmpl := template.Must(template.ParseFiles("pages/create_post.html"))
 		tmpl.Execute(w, nil)
@@ -18,7 +20,7 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 		categoryID, _ := strconv.Atoi(r.FormValue("category_id"))
 		userID := getUserIDFromSession(r) // Assume this function gets user ID from the session
 
-		err := models.CreatePost(db, title, content, userID, categoryID)
+		err := models.CreatePost(database.DB, title, content, userID, categoryID)
 		if err != nil {
 			http.Error(w, "Failed to create post", http.StatusInternalServerError)
 			return
@@ -29,7 +31,7 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ViewPostsHandler(w http.ResponseWriter, r *http.Request) {
-	posts, err := models.GetAllPosts(db)
+	posts, err := models.GetAllPosts(database.DB)
 	if err != nil {
 		http.Error(w, "Failed to load posts", http.StatusInternalServerError)
 		return
@@ -47,7 +49,7 @@ func FilterPostsByCategoryHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	posts, err := models.GetPostsByCategory(db, categoryID)
+	posts, err := models.GetPostsByCategory(database.DB, categoryID)
 	if err != nil {
 		http.Error(w, "Failed to retrieve posts", http.StatusInternalServerError)
 		return
@@ -59,7 +61,7 @@ func FilterPostsByCategoryHandler(w http.ResponseWriter, r *http.Request) {
 
 func FilterPostsByUserHandler(w http.ResponseWriter, r *http.Request) {
 	userID := getUserIDFromSession(r)
-	posts, err := models.GetPostsByUser(db, userID)
+	posts, err := models.GetPostsByUser(database.DB, userID)
 	if err != nil {
 		http.Error(w, "Failed to retrieve user posts", http.StatusInternalServerError)
 		return
@@ -71,7 +73,7 @@ func FilterPostsByUserHandler(w http.ResponseWriter, r *http.Request) {
 
 func FilterLikedPostsHandler(w http.ResponseWriter, r *http.Request) {
 	userID := getUserIDFromSession(r)
-	posts, err := models.GetLikedPosts(db, userID)
+	posts, err := models.GetLikedPosts(database.DB, userID)
 	if err != nil {
 		http.Error(w, "Failed to retrieve liked posts", http.StatusInternalServerError)
 		return

@@ -13,10 +13,8 @@
                 <h2 id="title">Literary Lions Forum</h2>
             </a>
         </div>
-        
         <div id="registerSection" class="items bordered">
             <h2>Register</h2>
-            <span style="color:green">{{.Message}}</span>
             <form action="/register" method="POST">
                 <label for="email">Email:</label><br>
                 <input class="input-box white-box" type="text" id="email" name="email" value="{{.Email}}"><br>
@@ -37,8 +35,7 @@
                 {{end}}
                 
                 <button class="button click-button" type="submit">Submit</button>
-            </form>
-            
+            </form>            
             <div style="padding: 8px;"></div>
             <div class="link-container click-button">
                 <a class="link" href="/login">Already have an account?</a>

@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -22,11 +23,13 @@ func HashPassword(password string) (string, error) {
 }
 
 func CheckPasswordHash(password, hash string) bool {
+	fmt.Println("CHECK PW HASH", hash, password)
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
 func CreateUser(db *sql.DB, username string, email string, hashedPassword string) error {
+	fmt.Println("CREATE USER", db, hashedPassword, username, email)
 	_, err := db.Exec("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", username, email, hashedPassword)
 	return err
 }
@@ -42,6 +45,7 @@ func RegisterUser(db *sql.DB, email, username, password string) error {
 }
 
 func AuthenticateUser(db *sql.DB, email, password string) (*User, error) {
+	// fmt.Println("Authenticate user email", email)
 	user := &User{}
 	err := db.QueryRow("SELECT id, username, email, password FROM users WHERE email = ?", email).Scan(&user.ID, &user.Username, &user.Email, &user.Password)
 	if err != nil {

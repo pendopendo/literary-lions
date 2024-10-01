@@ -1,15 +1,15 @@
 package handlers
 
 import (
-	"database/sql"
-	"literary-lions/models"
+	//"database/sql"
+	//"literary-lions/models"
 	"net/http"
 	"time"
 
-	"github.com/google/uuid"
+	//"github.com/google/uuid"
 )
 
-func CreateSession(w http.ResponseWriter, r *http.Request, db *sql.DB, userID int) error {
+/* func CreateSession(w http.ResponseWriter, r *http.Request, db *sql.DB, userID int) error {
 	sessionToken := uuid.New().String()
 	expiration := time.Now().Add(24 * time.Hour)
 
@@ -22,7 +22,10 @@ func CreateSession(w http.ResponseWriter, r *http.Request, db *sql.DB, userID in
 	http.SetCookie(w, &cookie)
 
 	return models.SaveSession(db, sessionToken, userID, expiration)
-}
+} */
+
+ //cookie, err := r.cookie("session_token")
+ //kontrollib cookie järgi sessi, uurib databasest useripõhiselt cookiet
 
 func getUserIDFromSession(r *http.Request) int {
 	userID := r.Context().Value("userID")

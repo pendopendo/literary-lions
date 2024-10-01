@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"literary-lions/database"
 	"literary-lions/handlers"
 	"log"
@@ -10,18 +11,16 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *sql.DB
-
 func main() {
 	var err error
-	db, err = sql.Open("sqlite3", "./database/forum.db")
+	database.DB, err = sql.Open("sqlite3", "./database/forum.db")
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(database.DB)
+	defer database.DB.Close()
 
-	defer db.Close()
-
-	database.InitSQLDB(db)
+	database.InitSQLDB(database.DB)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -30,8 +29,8 @@ func main() {
 	http.HandleFunc("/register", handlers.RegisterHandler)
 	http.HandleFunc("/login", handlers.LoginHandler)
 	http.HandleFunc("/logout", handlers.LogoutHandler)
-	//http.Handle("/create-post", middleware.AuthMiddleware(http.HandlerFunc(handlers.CreatePostHandler)))
-	//http.Handle("/logout", middleware.AuthMiddleware(http.HandlerFunc(handlers.LogoutHandler)))
+	http.Handle("/create-post",handlers.CreatePostHandler)
+	http.Handle("/logout",(handlers.LogoutHandler))
 	http.HandleFunc("/filter/category", handlers.FilterPostsByCategoryHandler)
 	http.HandleFunc("/filter/user", handlers.FilterPostsByUserHandler)
 	http.HandleFunc("/filter/liked", handlers.FilterLikedPostsHandler)

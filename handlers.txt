@@ -6,27 +6,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-
-func registerHandler {
-
-}
-
-func loginHandler {
-
-}
-
-func logoutHandler {
-
-}
-
-func createPostHandler {
-
-}
-
-func viewPostHandler {
-
-}
-
 func commentHandler {
 
 }

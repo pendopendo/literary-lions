@@ -22,7 +22,7 @@ func CreateSession(db *sql.DB, userID int) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	
 	return sessionToken, nil
 }
 
