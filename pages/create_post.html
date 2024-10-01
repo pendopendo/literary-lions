@@ -3,86 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forum</title>
-    <link rel="stylesheet" href="/static/css/createPost.css" />
+    <title>Create Post - Literary Lions Forum</title>
+    <link rel="stylesheet" href="/static/css/create_post.css" />
   </head>
   <body>
     <div id="container">
       <div id="header" class="items">
         <a href="/" class="post-link">
-          <h1 id="title">Forum</h1>
+          <h2 id="title">Literary Lions Forum</h2>
         </a>
-        <a href="/createPost" id="cPB">
-          <button id="createPostButton">Create Post</button>
-        </a>
-        <p id="userName">{{ .User.Username }}</p>
-        {{ if gt .User.Type 0 }}
-        <a href="/logout" id="loginTag">
-          <button id="login">Logout</button>
-        </a>
-        {{ else }}
-        <a href="/login" id="loginTag">
-          <button id="login">Login</button>
-        </a>
-        {{ end }}
       </div>
-      <div id="postAndCommentContainer">
-        <div id="posts" class="items">
-          <form action="/createPost" method="post" id="form">
-            <input
-              id="postHeader"
-              type="text"
-              name="title"
-              placeholder="Title"
-              required
-            />
-            <div id="categorySelect">
-              {{ range .Categories }}
-              <input
-                type="checkbox"
-                id="{{ . }}"
-                name="categories[]"
-                value="{{ . }}"
-              />
-              <label for="{{ . }}">{{ . }}</label><br />
-              {{ end }}
-            </div>
-            <textarea
-              id="postContent"
-              name="content"
-              placeholder="Content"
-              required
-            ></textarea>
-            <div id="error">{{ .Error }}</div>
-            <button id="submitButton" type="submit">Submit</button>
-          </form>
-        </div>
+      <div id="createPostForm" class="items">
+        <h2>Create a New Post</h2>
+        <form action="/createPost" method="post">
+          <input
+            type="text"
+            id="postTitle"
+            name="title"
+            placeholder="Post Title"
+            required
+          />
+          <select id="categorySelect" name="category" optional>
+            <option value="" disabled selected>Select a Category</option>
+            {{ range .Category }}
+            <option value="{{ . }}">{{ . }}</option>
+            {{ end }}
+          </select>
+          <textarea
+            id="postContent"
+            name="content"
+            rows="10"
+            placeholder="Write your post here..."
+            required
+          ></textarea>
+          <div id="buttons">
+            <button type="submit" id="submitButton">Submit</button>
+            <a href="/" id="cancelButton">Cancel</a>
+          </div>
+        </form>
       </div>
-      <div id="side" class="items left">
-        <div class="leftHeader">
-          <h2>Top Categories</h2>
-        </div>
-        <div class="postsContainer">
-          {{ range .Categories }}
-          <a href="/category/{{ . }}" class="post-link">
-            <div class="category">
-              <h3>{{ . }}</h3>
-            </div>
-          </a>
-          {{ end }}
-        </div>
-      </div>
-      <div id="profile" class="items left">
-        <div id="profileHeader">
-          <h2>Profile</h2>
-        </div>
-        <a href="/profile/posts" class="buttonP">
-          <div id="profilePosts" class="profileStuff">
+      <div id="profileBox" class="items">
+        <a href="/login" class="buttonLogin">
+          <div id="login" class="profileStuff">
             <h3>Posts</h3>
           </div>
         </a>
-        <a href="/profile/likes" class="buttonL">
-          <div id="profileLikes" class="profileStuff">
+        <a href="/register" class="buttonRegister">
+          <div id="register" class="profileStuff">
             <h3>Likes</h3>
           </div>
         </a>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .Title }} - Literary Lions Forum</title>
+    <link rel="stylesheet" href="/static/css/view_post.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="header" class="items">
+        <a href="/" class="post-link">
+          <h2 id="title">Literary Lions Forum</h2>
+        </a>
+      </div>
+
+      <div id="postContentBox" class="items">
+        <form action="/post" method="get">
+        <h2 id="postTitle">{{ .Title }}</h2>
+        <h3 id="postCategory">Category: {{ .Category }}</h3>
+        <p id="postContent">{{ .Content }}</p>
+        <div id="buttons">
+          <a href="/" id="backButton">Back to Home</a>
+        </div>
+        </form>
+      </div>
+
+      <div id="profileBox" class="items">
+        <a href="/login" class="buttonLogin">
+          <div id="login" class="profileStuff">
+            <h3>Posts</h3>
+          </div>
+        </a>
+        <a href="/register" class="buttonRegister">
+          <div id="register" class="profileStuff">
+            <h3>Likes</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

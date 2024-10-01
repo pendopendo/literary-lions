@@ -21,7 +21,6 @@ body {
     border-radius: 30px;
     color: whitesmoke;
     scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 /* Hide scrollbar for all elements */
