@@ -11,7 +11,7 @@ import (
 func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 	//if authenticated siis jah, kui mitte mine logini
 	if r.Method == http.MethodGet {
-		tmpl := template.Must(template.ParseFiles("pages/create_post.html"))
+		tmpl := template.Must(template.ParseFiles("pages/createPost.html"))
 		tmpl.Execute(w, nil)
 	} else if r.Method == http.MethodPost {
 		r.ParseForm()
