@@ -1,0 +1,32 @@
+{{define "title"}}Home{{end}}
+
+{{define "main"}}
+<div class='snippet'>
+
+
+        <!-- Toggle the links based on authentication status -->
+        {{if .IsAuthenticated}}
+    <!-- Add a link to the new form -->
+          <a href='/post/create/{{.CategoryID}}'>Create post</a>
+        {{end}}
+    <!-- Hardcoded comment section -->
+    <!-- scc seest see class -->
+    <div class='comments'> 
+        <h3>Postitused</h3>
+        <ul>
+            {{range .Posts}}
+            <!-- Nüüd võtab sealt -->
+            <li>
+      
+                <!-- <p>{{.ID}}</p> -->
+                {{.ID}} <strong><a href="/post/view/{{.ID}}">{{.Title}}</a></strong>
+            </li>
+        
+            {{else}}
+            <!-- Kui kommentaare ei ole DB-s siis näeme seda -->
+            <p>There's nothing to see here... yet! Come back soon, darling!</p>
+            {{end}}
+        </ul>
+    </div>
+</div>
+{{end}}

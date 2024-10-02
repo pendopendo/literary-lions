@@ -1,0 +1,26 @@
+package models
+//(27.09.24)
+import (
+    "database/sql"
+    "errors" // New import
+)
+
+// Define a Comment type to hold the data for an individual Comment. Notice how
+// the fields of the struct correspond to the fields in our MySQL Comments
+// table?
+type Comment struct {
+    ID      int
+    User   string
+    Post Int
+    Text string
+    Created string
+    
+}
+
+
+// Define a CommentModel type which wraps a sql.DB connection pool.
+type CommentModel struct {
+    DB *sql.DB
+}
+
+//funtkstioonid

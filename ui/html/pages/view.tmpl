@@ -1,0 +1,71 @@
+{{define "title"}}Snippet #{{.Post.ID}}{{end}}
+
+{{define "main"}}
+<div class='snippet'>
+    <div class='metadata'>
+        <strong>{{.Post.Title}}</strong>
+        <span>#{{.Post.ID}}</span>
+        Author: {{.Post.User.Name}}
+    </div>
+    <pre><code>{{.Post.Text}}</code></pre>
+    <div class='metadata'>
+        <time>Created: {{.Post.Created}}</time>
+    </div>
+    <div class='reactions'>
+        <p>Likes: {{.Likes}} Dislikes: {{.Dislikes}}</p>
+    </div>
+
+    {{if .IsAuthenticated}}
+    <div class='actions'>
+        <form action='/reaction/create/{{.Post.ID}}' method='POST' style='display:inline-block;'>
+            <input type='hidden' name='reaction' value='like'>
+            <button type='submit' class='button'>Like</button>
+        </form>
+        <form action='/reaction/create/{{.Post.ID}}' method='POST' style='display:inline-block;'>
+            <input type='hidden' name='reaction' value='dislike'>
+            <button type='submit' class='button'>Dislike</button>
+        </form>
+    </div>
+
+    <form action='/comment/create/{{.Post.ID}}' method='POST'>
+        <div>
+            <label>Write a comment:</label>
+            <textarea name='content'></textarea> 
+        </div>
+        <div>
+            <input type='submit' value='Publish comment'>
+        </div>
+    </form>
+    {{end}}
+
+    <div class='comments'>
+        <h3>Comments</h3>
+        <ul>
+            {{range .Comments}}
+            <li>
+                <strong class='author'>{{.User.Name}}</strong> wrote:
+                <p>{{.Text}}</p>
+                <time>{{.Created}}</time>
+                <div class='reactions'>
+                    <p>Likes: {{.Likes}} Dislikes: {{.Dislikes}}</p>
+                </div>
+                {{if $.IsAuthenticated}}
+                <div class='actions'>
+                    <form action='/reaction/create/{{.Post}}/{{.ID}}' method='POST' style='display:inline-block;'>
+                        <input type='hidden' name='reaction' value='like'>
+                        <button type='submit' class='button'>Like</button>
+                    </form>
+                    <form action='/reaction/create/{{.Post}}/{{.ID}}' method='POST' style='display:inline-block;'>
+                        <input type='hidden' name='reaction' value='dislike'>
+                        <button type='submit' class='button'>Dislike</button>
+                    </form>
+                </div>
+                {{end}}
+            </li>
+            {{else}}
+            <p>There's nothing to see here... yet!</p>
+            {{end}}
+        </ul>
+    </div>
+</div>
+{{end}}

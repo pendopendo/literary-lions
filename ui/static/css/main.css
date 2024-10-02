@@ -1,0 +1,245 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: "Ubuntu Mono", monospace;
+}
+
+/* General Styles */
+html, body {
+    height: 100%;
+    background-color: #F1F3F6;
+    color: #34495E;
+    overflow-y: scroll;
+}
+
+body {
+    line-height: 1.5;
+}
+
+header, nav, main, footer {
+    padding: 0 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+main {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: calc(100vh - 345px);
+}
+
+h1 a {
+    font-size: 36px;
+    font-weight: bold;
+    background-image: url("/static/img/logo.png");
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    height: 36px;
+    padding-left: 50px;
+    position: relative;
+}
+
+h1 a:hover {
+    text-decoration: none;
+    color: #34495E;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 36px;
+    position: relative;
+    top: -9px;
+}
+
+a {
+    color: #62CB31;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #4EB722;
+    text-decoration: underline;
+}
+
+/* Form and Input Styles */
+textarea, input:not([type="submit"]) {
+    font-size: 18px;
+    font-family: "Ubuntu Mono", monospace;
+}
+
+textarea, form input[type="text"], form input[type="password"], form input[type="email"] {
+    padding: 0.75em 18px;
+    width: 100%;
+    color: #6A6C6F;
+    background: #FFFFFF;
+    border: 1px solid #E4E5E7;
+    border-radius: 3px;
+    margin-bottom: 18px;
+}
+
+input[type="submit"], .button {
+    background-color: #62CB31;
+    border-radius: 3px;
+    color: #FFFFFF;
+    padding: 18px 27px;
+    border: none;
+    margin-top: 18px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+input[type="submit"]:hover, .button:hover {
+    background-color: #4EB722;
+    cursor: pointer;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(to right, #34495e, #9b59b6 25%, #3498db 35%, #62cb31 45%, #ffb606 55%, #e67e22 65%, #e74c3c 85%, #c0392b 100%);
+    border-bottom: 1px solid #E4E5E7;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header a {
+    color: #34495E;
+    text-decoration: none;
+}
+
+/* Navigation Styles */
+nav {
+    border-bottom: 1px solid #E4E5E7;
+    padding: 15px 0;
+    background: #F7F9FA;
+    color: #6A6C6F;
+}
+
+nav a, nav form {
+    margin-right: 1.5em;
+    display: inline-block;
+}
+
+nav div {
+    width: 50%;
+    float: left;
+}
+
+nav div:last-child {
+    text-align: right;
+}
+
+/* Form Error Styles */
+.error {
+    color: #C0392B;
+    font-weight: bold;
+    display: block;
+}
+
+.error + textarea, .error + input {
+    border-color: #C0392B !important;
+}
+
+/* Comment Section Styles */
+.comments {
+    background-color: #FFFFFF;
+    border: 1px solid #E4E5E7;
+    border-radius: 3px;
+    padding: 18px;
+    margin-top: 36px;
+}
+
+.comments h3 {
+    font-size: 22px;
+    color: #34495E;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #E4E5E7;
+    padding-bottom: 9px;
+}
+
+.comments ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comments li {
+    padding: 18px;
+    border-bottom: 1px solid #E4E5E7;
+    margin-bottom: 18px;
+    background-color: #F7F9FA;
+    border-radius: 3px;
+}
+
+.comments li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.comments strong {
+    color: #34495E;
+}
+
+.comments p {
+    color: #6A6C6F;
+    margin: 9px 0;
+}
+
+.comments time {
+    font-size: 14px;
+    color: #A0A4A8;
+    display: block;
+    margin-top: 6px;
+}
+
+.comments time::before {
+    content: "Posted on: ";
+    font-style: italic;
+}
+
+/* Footer Styles */
+footer {
+    border-top: 1px solid #E4E5E7;
+    padding: 15px 0;
+    background: #F7F9FA;
+    color: #6A6C6F;
+    text-align: center;
+}
+
+/* Snippet Styles */
+.snippet {
+    background-color: #FFFFFF;
+    border: 1px solid #E4E5E7;
+    border-radius: 3px;
+    margin-bottom: 36px;
+    padding: 18px;
+}
+
+.snippet pre {
+    padding: 18px;
+    background: #F8F8F8;
+}
+
+.snippet .metadata {
+    background-color: #F7F9FA;
+    color: #6A6C6F;
+    padding: 10px;
+    border-top: 1px solid #E4E5E7;
+}
+
+.snippet .metadata span {
+    float: right;
+}
+
+.snippet .metadata time {
+    display: block;
+    margin-top: 5px;
+}
+
+.snippet .actions {
+    margin-top: 18px;
+}
+
+.snippet .actions button {
+    margin-right: 10px;
+}
