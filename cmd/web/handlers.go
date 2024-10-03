@@ -6,7 +6,8 @@ import (
 	"html/template" // New import
 	"net/http"
 	"strconv"
-"strings"
+	"strings"
+
 	//"log"           // New import
 	_ "github.com/mattn/go-sqlite3" // SQLite3 driver import
 	"snippetbox.alexedwards.net/internal/models"
@@ -468,9 +469,8 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("SERVER ERROR tuli")
 		// Handle potential duplicate email error or any other error
-		fmt.Println("models.ErrDuplicateEmail ON: ",models.ErrDuplicateEmail)
-		fmt.Println("ja err: ",err)
-		
+		fmt.Println("models.ErrDuplicateEmail ON: ", models.ErrDuplicateEmail)
+		fmt.Println("ja err: ", err)
 
 		if strings.Contains(err.Error(), "UNIQUE constraint failed") {
 			if strings.Contains(err.Error(), "UNIQUE constraint failed: users.email") {
@@ -487,7 +487,7 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 			}
 			fmt.Println("DATA SIIN:", data)
 			app.render(w, r, http.StatusOK, "./ui/html/pages/signup.tmpl", data)
-				return
+			return
 		}
 
 		fmt.Println("kas errrororororororoor")
