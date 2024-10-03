@@ -4,12 +4,12 @@
 <form action='/post/create/{{.CategoryID}}' method='POST'>
     <div>
         <label>Title:</label>
-        <input type='text' name='title'>
+        <input type='text' name='title' required>
     </div>
     <div>
         <label>Content:</label>
         <!-- see nimi on ka handleris mis siin all -->
-        <textarea name='content'></textarea> 
+        <textarea name='content' required></textarea> 
     </div>
 
     
