@@ -21,6 +21,7 @@ func chainMiddleware(h http.Handler, middlewares ...Middleware) http.Handler {
 func (app *application) routes() http.Handler {
 	mux := http.NewServeMux()
 
+
 	// Create a file server which serves files out of the "./ui/static" directory.
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
