@@ -4,17 +4,23 @@
 <form action='/user/login' method='POST' novalidate>
     <!-- Notice that here we are looping over the NonFieldErrors and displaying
     them, if any exist -->
-
     <div>
         <label>Email:</label>
-
         <input type='email' name='email' value='{{.Form.Email}}'>
+        {{with .Form.FieldErrors.email}}
+        <label class="error">{{.}}</label> <!-- This will display the error for email -->
+        {{end}}
     </div>
     <div>
         <label>Password:</label>
-
         <input type='password' name='password'>
+        {{with .Form.FieldErrors.password}}
+        <label class="error">{{.}}</label> <!-- This will display the error for password -->
+        {{end}}
     </div>
+    {{with .Form.FieldErrors.login}}
+    <label class="error">{{.}}</label> <!-- This will display the "wrong email or password" error -->
+    {{end}}
     <div>
         <input type='submit' value='Login'>
     </div>

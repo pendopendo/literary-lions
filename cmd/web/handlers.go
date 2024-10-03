@@ -437,20 +437,51 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
 
+	// Initialize form data to track errors
+	form := userSignupForm{
+		FieldErrors: make(map[string]string),
+	}
+
+	// Validation: Check if required fields are filled
+	if name == "" {
+		form.FieldErrors["name"] = "Name is required"
+	}
+	if email == "" {
+		form.FieldErrors["email"] = "Email is required"
+	}
+	if password == "" {
+		form.FieldErrors["password"] = "Password is required"
+	}
+
+	// If there are validation errors, re-display the signup form with errors
+	if len(form.FieldErrors) > 0 {
+		data := templateData{
+			Form:            form,
+			IsAuthenticated: app.isAuthenticated(r),
+		}
+		app.render(w, r, http.StatusOK, "./ui/html/pages/signup.tmpl", data)
+		return
+	}
+
 	// Call the Insert method to save the user details
 	err = app.users.Insert(name, email, password)
 	if err != nil {
 		// Handle potential duplicate email error or any other error
 		if errors.Is(err, models.ErrDuplicateEmail) {
-			// You may want to re-render the signup page with an error message
-			http.Error(w, "This email address is already registered", http.StatusConflict)
+			// Add the duplicate email error to the form
+			form.FieldErrors["email"] = "This email address is already registered"
+			data := templateData{
+				Form:            form,
+				IsAuthenticated: app.isAuthenticated(r),
+			}
+			app.render(w, r, http.StatusOK, "./ui/html/pages/signup.tmpl", data)
 			return
 		}
 		app.serverError(w, r, err)
 		return
 	}
 
-	// Redirect the user to a welcome page or login page after successful signup
+	// Redirect the user to the login page after successful signup
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 }
 
@@ -486,14 +517,41 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
 
+	// Initialize form data to track errors
+	form := userSignupForm{ // Initialize the form here
+		FieldErrors: make(map[string]string),
+	}
+
+	// Check for empty fields and add error messages
+	if email == "" {
+		form.FieldErrors["email"] = "Email is required"
+	}
+	if password == "" {
+		form.FieldErrors["password"] = "Password is required"
+	}
+
+	// If there are validation errors, re-display the login form with errors
+	if len(form.FieldErrors) > 0 {
+		data := templateData{
+			Form:            form,
+			IsAuthenticated: app.isAuthenticated(r),
+		}
+		app.render(w, r, http.StatusOK, "./ui/html/pages/login.tmpl", data)
+		return
+	}
+
 	// Check whether the credentials are valid. If they're not, add a generic
 	// non-field error message and re-display the login page.
 	id, err := app.users.Authenticate(email, password)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
-
-			app.userLogin(w, r) //kutsume selle siit ülalt
-
+			// Add a "wrong email or password" error to the form
+			form.FieldErrors["login"] = "Wrong email or password"
+			data := templateData{
+				Form:            form,
+				IsAuthenticated: app.isAuthenticated(r),
+			}
+			app.render(w, r, http.StatusOK, "./ui/html/pages/login.tmpl", data)
 		} else {
 			app.serverError(w, r, err)
 		}
