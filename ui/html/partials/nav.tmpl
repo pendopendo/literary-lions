@@ -6,7 +6,8 @@
     <div>
         <!-- Toggle the links based on authentication status -->
         {{if .IsAuthenticated}}
-            <form action='/user/logout' method='POST'>
+            <a href='/user/profile'>Profile</a>
+            <form action='/user/logout' method='POST' style='display:inline;'>
                 <button>Logout</button>
             </form>
         {{else}}
