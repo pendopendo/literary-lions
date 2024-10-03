@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strings"
 	"time"
-
+	//"fmt"
 	"github.com/mattn/go-sqlite3"
 	_ "github.com/mattn/go-sqlite3" // SQLite3 driver import
 	"golang.org/x/crypto/bcrypt"
@@ -35,14 +35,25 @@ func (m *UserModel) Insert(name, email, password string) error {
 
 	stmt := `INSERT INTO users (name, email, hashed_password, created)
              VALUES (?, ?, ?, datetime('now'))`
-
 	_, err = m.DB.Exec(stmt, name, email, string(hashedPassword))
+
 	if err != nil {
-		// Check for unique constraint violations, etc.
-		return err
+		// if errors.Is(err, sqlite3.ErrConstraintUnique) { 
+		// 	return   ErrDuplicateEmail // ErrDuplicateEmail should be a custom error defined for this case
+		// } else {
+			return    err
+		// }
 	}
 
-	return nil
+
+
+	// if err != nil {
+	// 	// Check for unique constraint violations, etc.
+	// 	fmt.Println("sign up error:",  err)
+	// 	return err
+	// }
+
+	  return nil
 }
 
 // Get retrieves a user based on their ID from the "users" table.

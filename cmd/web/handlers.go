@@ -6,9 +6,9 @@ import (
 	"html/template" // New import
 	"net/http"
 	"strconv"
-
+"strings"
 	//"log"           // New import
-
+	_ "github.com/mattn/go-sqlite3" // SQLite3 driver import
 	"snippetbox.alexedwards.net/internal/models"
 )
 
@@ -466,17 +466,31 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 	// Call the Insert method to save the user details
 	err = app.users.Insert(name, email, password)
 	if err != nil {
+		fmt.Println("SERVER ERROR tuli")
 		// Handle potential duplicate email error or any other error
-		if errors.Is(err, models.ErrDuplicateEmail) {
-			// Add the duplicate email error to the form
-			form.FieldErrors["email"] = "This email address is already registered"
+		fmt.Println("models.ErrDuplicateEmail ON: ",models.ErrDuplicateEmail)
+		fmt.Println("ja err: ",err)
+		
+
+		if strings.Contains(err.Error(), "UNIQUE constraint failed") {
+			if strings.Contains(err.Error(), "UNIQUE constraint failed: users.email") {
+				// Add the duplicate email error to the form
+				form.FieldErrors["email"] = "This email address is already registered"
+			}
+			if strings.Contains(err.Error(), "UNIQUE constraint failed: users.name") {
+				// Add the duplicate email error to the form
+				form.FieldErrors["name"] = "This name is already registered"
+			}
 			data := templateData{
 				Form:            form,
 				IsAuthenticated: app.isAuthenticated(r),
 			}
+			fmt.Println("DATA SIIN:", data)
 			app.render(w, r, http.StatusOK, "./ui/html/pages/signup.tmpl", data)
-			return
+				return
 		}
+
+		fmt.Println("kas errrororororororoor")
 		app.serverError(w, r, err)
 		return
 	}

@@ -13,5 +13,7 @@ var (
 
 	// Add a new ErrDuplicateEmail error. We'll use this later if a user
 	// tries to signup with an email address that's already in use.
-	ErrDuplicateEmail = errors.New("models: duplicate email")
+	ErrDuplicateEmail = errors.New("UNIQUE constraint failed: users.email") //ErrDuplicateEmail = errors.New("models: duplicate email")
+
+	
 )
