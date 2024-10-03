@@ -16,26 +16,28 @@ COPY . .
 # Build the Go app
 RUN go build -o web ./cmd/web
 
+# Install SQLite and initialize the database
+RUN apt-get update && apt-get install -y sqlite3
+COPY ./scripts/initial-database.sql ./scripts/initial-database.sql
+RUN sqlite3 /app/literarylionforum.db < ./scripts/initial-database.sql
+
 # Start a new stage from scratch
 FROM ubuntu:22.04
 
 # Set Environment Variables
 ENV PORT 8080
 
-# Install SQLite
-RUN apt-get update && apt-get install -y sqlite3
-
 # Create and set a working directory inside the container
 WORKDIR /app
 
-# Copy the pre-built binary file, scripts and other required files from the previous stage
+# Declare a volume for the SQLite database
+VOLUME /app/data
+
+# Copy the pre-built binary file and initialized database from the builder stage
 COPY --from=builder /app/web .
-COPY --from=builder /app/scripts/initial-database.sql ./scripts/initial-database.sql
+COPY --from=builder /app/literarylionforum.db /app/data/literarylionforum.db
 COPY --from=builder /app/ui/html ./ui/html
 COPY --from=builder /app/ui/static ./ui/static
-
-# Create a new SQLite database and populate it with initial data
-RUN sqlite3 literarylionforum.db < ./scripts/initial-database.sql
 
 # Command to run the executable
 CMD ["./web"]

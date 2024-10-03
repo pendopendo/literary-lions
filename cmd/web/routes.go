@@ -60,6 +60,6 @@ func (app *application) routes() http.Handler {
 	mux.Handle("POST /reaction/create/{post_id}", chainMiddleware(http.HandlerFunc(app.reactionCreatePostPost), protectedMiddlewares...))
 	mux.Handle("POST /reaction/create/{post_id}/{comment_id}", chainMiddleware(http.HandlerFunc(app.reactionCreateCommentPost), protectedMiddlewares...))
 
-	// Wrap the entire mux with the standard middlewares.
+	// Wrap the entire mux with the standard middlewares. as as
 	return chainMiddleware(mux, standardMiddlewares...)
 }
