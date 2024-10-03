@@ -52,7 +52,7 @@ func main() {
 	logger.Info("Successfully connected to the SQLite database!")
 
 	// Connect to the database using the connectDB function
-	db, err := connectDB("./literarylionforum.db")
+	db, err := connectDB("./data/literarylionforum.db")
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
