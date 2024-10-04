@@ -80,7 +80,7 @@ func (app *application) postView(w http.ResponseWriter, r *http.Request) { //htt
 		}
 		return
 	}
-
+fmt.Println("postv 1")
 	//MUDELIGA SUHTLUS
 	comments, err := app.comments.GetCommentsForPost(id) // app.comments - sID 240928_184230 sealt
 	if err != nil {
@@ -293,6 +293,22 @@ func (app *application) categoryView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+
+	//siia ijuurde panin
+	
+    // Pärime kategooria nime vastavalt ID-le
+    category, err := app.categories.GetByID(id)
+    if err != nil {
+        if errors.Is(err, models.ErrNoRecord) {
+            http.NotFound(w, r)
+        } else {
+            app.serverError(w, r, err)
+        }
+        return
+    }
+
+	//
+
 	post, err := app.posts.GetPostsForCategory(id)
 	if err != nil {
 		if errors.Is(err, models.ErrNoRecord) {
@@ -308,10 +324,11 @@ func (app *application) categoryView(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 		return
 	}
-
+fmt.Println("katid siin categoryView all:")
 	data := templateData{
 		CategoryID:      id,
 		Categories:      categories,
+		CategoryName:    category.Name, // Lisame kategooria nime, mille saime GetByID kaudu
 		Posts:           post,
 		IsAuthenticated: app.isAuthenticated(r),
 	}

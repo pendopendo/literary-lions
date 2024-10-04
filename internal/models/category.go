@@ -79,4 +79,22 @@ func (m *CategoryModel) GetRow() ([]Category, error) {
 
 	// If everything went OK then return the Categorys slice.
 	return categories, nil
+
+	
+}
+// GetByID returns a specific category based on its ID.
+func (m *CategoryModel) GetByID(id int) (*Category, error) {
+	stmt := `SELECT id, name FROM category WHERE id = ?`
+	row := m.DB.QueryRow(stmt, id)
+
+	// Loome uue kategooria struktuuri ja täidame selle andmetega
+	category := &Category{}
+	err := row.Scan(&category.ID, &category.Name)
+	if err == sql.ErrNoRows {
+		return nil, ErrNoRecord // Saadad tagasi vea, kui kirjet ei leitud
+	} else if err != nil {
+		return nil, err
+	}
+
+	return category, nil
 }

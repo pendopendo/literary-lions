@@ -22,7 +22,9 @@
         <a href='/post/create/{{.CategoryID}}'>Create post</a>
         {{end}}
 
-        <h3>{{.Categories}} Postitused</h3>
+        
+        <h3>{{.CategoryName}} postitused</h3>
+        
         <ul>
             {{range .Posts}}
             <li>
