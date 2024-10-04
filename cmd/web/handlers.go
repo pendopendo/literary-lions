@@ -17,9 +17,6 @@ import (
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
-	//(29.09.24) seda jrg rida pole enam vaja
-	//w.Header().Add("Server", "Go") //response headersis näha browseris (tühikudi ei tohi olla)
-
 	//-----------   VANA   -----------------//
 	// kategooriad kuvamien ilma html
 	categories, err := app.categories.GetRow()
@@ -27,24 +24,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 		return
 	}
-	//----------- VANA  lõpp --------------//
-
-	// for _, category := range categories {
-	// 	fmt.Fprintf(w, "home see katid:%+v\n", category) //home lehele hektel need
-	// }
-
-	// //postitused korraks
-	// posts, err := app.posts.Get()
-	// if err != nil {
-	// 	app.serverError(w, r, err)
-	// 	return
-	// }
-
-	// for _, post := range posts {
-	// 	fmt.Fprintf(w, "\nhome see POSTID:%+v\n", post) //home lehele hektel need
-	// }
-
-	//fmt.Println("SEE: ", posts)
 
 	// Create an instance of a templateData struct holding the snippet data.
 	//seda hakkab siis html kasutama range kaudu
@@ -69,7 +48,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//fmt.Println("Data:", data)
 	// And then execute them. Notice how we are passing in the snippet
 	// data (a models.Snippet struct) as the final parameter?
 	err = ts.ExecuteTemplate(w, "base", data)
@@ -722,4 +700,20 @@ func (app *application) reactionCreateCommentPost(w http.ResponseWriter, r *http
 
 	http.Redirect(w, r, fmt.Sprintf("/post/view/%d", postID), http.StatusSeeOther) //teeb postituse lahti mille just lõid
 
+}
+
+// templateData struct to store any dynamic content you want to pass to the HTML templates.
+
+// Handler for the custom 404 error page.
+func (app *application) notFound(w http.ResponseWriter, r *http.Request) {
+	// Define the 404 error page template data.
+	data := templateData{
+		Title: "404 page not found",
+	}
+
+	// Set the HTTP status code to 404.
+	w.WriteHeader(http.StatusNotFound)
+
+	// Render the 404 template with the provided data.
+	app.render(w, r, http.StatusNotFound, "./ui/html/pages/404.tmpl", data)
 }

@@ -18,4 +18,5 @@ type templateData struct {
 	Reactions       []models.Reaction
 	Likes           int // Post likes
 	Dislikes        int // Post dislikes
+	Title           string
 }

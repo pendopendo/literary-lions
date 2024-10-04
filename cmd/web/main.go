@@ -16,6 +16,8 @@ http://localhost:4000/user/login
 */
 import (
 	"database/sql" // New import
+	"fmt"
+
 	//"flag"
 	"log"
 	"net/http"
@@ -51,12 +53,22 @@ func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	logger.Info("Successfully connected to the SQLite database!")
 
-	// Connect to the database using the connectDB function
+	var err error
+	db, err = sql.Open("sqlite3", "./data/literarylionforum.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(db)
+	defer db.Close()
+
+	InitSQLDB(db)
+
+	/*// Connect to the database using the connectDB function
 	db, err := connectDB("./data/literarylionforum.db")
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
-	defer db.Close()
+	defer db.Close()*/
 
 	// Use the scs.New() function to initialize a new session manager. Then we
 	// configure it to use our MySQL database as the session store, and set a
@@ -87,7 +99,7 @@ func main() {
 
 }
 
-// connectDB opens a connection to the SQLite database and returns the database instance
+/*// connectDB opens a connection to the SQLite database and returns the database instance
 func connectDB(dbPath string) (*sql.DB, error) {
 	// Open the SQLite database
 	db, err := sql.Open("sqlite3", dbPath)
@@ -120,4 +132,4 @@ func getPost(db *sql.DB, postID int) (int, string, string, int, string, error) {
 	return id, title, text, categoryID, created, nil
 }
 
-// ------------------------------------ //
+// ------------------------------------ //*/

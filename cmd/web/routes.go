@@ -21,7 +21,6 @@ func chainMiddleware(h http.Handler, middlewares ...Middleware) http.Handler {
 func (app *application) routes() http.Handler {
 	mux := http.NewServeMux()
 
-
 	// Create a file server which serves files out of the "./ui/static" directory.
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
@@ -60,6 +59,9 @@ func (app *application) routes() http.Handler {
 	// Reaction routes
 	mux.Handle("POST /reaction/create/{post_id}", chainMiddleware(http.HandlerFunc(app.reactionCreatePostPost), protectedMiddlewares...))
 	mux.Handle("POST /reaction/create/{post_id}/{comment_id}", chainMiddleware(http.HandlerFunc(app.reactionCreateCommentPost), protectedMiddlewares...))
+
+	// Catch-all route for 404 errors
+	mux.HandleFunc("/", app.notFound)
 
 	// Wrap the entire mux with the standard middlewares. as as
 	return chainMiddleware(mux, standardMiddlewares...)
