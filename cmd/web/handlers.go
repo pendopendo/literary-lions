@@ -708,12 +708,30 @@ func (app *application) reactionCreateCommentPost(w http.ResponseWriter, r *http
 func (app *application) notFound(w http.ResponseWriter, r *http.Request) {
 	// Define the 404 error page template data.
 	data := templateData{
-		Title: "404 page not found",
+		Title:           "404 page not found",
+		IsAuthenticated: app.isAuthenticated(r), // Include authentication status if needed
 	}
 
 	// Set the HTTP status code to 404.
 	w.WriteHeader(http.StatusNotFound)
 
-	// Render the 404 template with the provided data.
-	app.render(w, r, http.StatusNotFound, "./ui/html/pages/404.tmpl", data)
+	// Initialize a slice containing the paths to the template files.
+	files := []string{
+		"./ui/html/base.tmpl",         // Base layout
+		"./ui/html/partials/nav.tmpl", // Navigation partial
+		"./ui/html/pages/404.tmpl",    // 404 error page
+	}
+
+	// Parse the template files.
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	// Execute the base template with the data for rendering.
+	err = ts.ExecuteTemplate(w, "base", data)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
 }

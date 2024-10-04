@@ -61,7 +61,7 @@ func (app *application) routes() http.Handler {
 	mux.Handle("POST /reaction/create/{post_id}/{comment_id}", chainMiddleware(http.HandlerFunc(app.reactionCreateCommentPost), protectedMiddlewares...))
 
 	// Catch-all route for 404 errors
-	mux.HandleFunc("/", app.notFound)
+	mux.Handle("GET /", chainMiddleware(http.HandlerFunc(app.notFound), dynamicMiddlewares...))
 
 	// Wrap the entire mux with the standard middlewares. as as
 	return chainMiddleware(mux, standardMiddlewares...)
