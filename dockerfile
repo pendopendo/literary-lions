@@ -18,8 +18,6 @@ RUN go build -o web ./cmd/web
 
 # Install SQLite  and initialize the database
 RUN apt-get update && apt-get install -y sqlite3
-COPY ./scripts/initial-database.sql ./scripts/initial-database.sql
-RUN sqlite3 /app/literarylionforum.db < ./scripts/initial-database.sql
 
 # Start a new stage from scratch
 FROM ubuntu:22.04

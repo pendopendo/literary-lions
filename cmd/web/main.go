@@ -49,11 +49,16 @@ type application struct {
 }
 
 func main() {
+	// Run the docker system prune -a command
+	var err error
+	/*err := pruneDockerSystem()
+	if err != nil {
+		log.Fatalf("Failed to prune Docker system: %v", err)
+	}*/
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	logger.Info("Successfully connected to the SQLite database!")
 
-	var err error
 	db, err = sql.Open("sqlite3", "./data/literarylionforum.db")
 	if err != nil {
 		log.Fatal(err)
@@ -62,13 +67,6 @@ func main() {
 	defer db.Close()
 
 	InitSQLDB(db)
-
-	/*// Connect to the database using the connectDB function
-	db, err := connectDB("./data/literarylionforum.db")
-	if err != nil {
-		log.Fatalf("Failed to connect to the database: %v", err)
-	}
-	defer db.Close()*/
 
 	// Use the scs.New() function to initialize a new session manager. Then we
 	// configure it to use our MySQL database as the session store, and set a
@@ -99,37 +97,12 @@ func main() {
 
 }
 
-/*// connectDB opens a connection to the SQLite database and returns the database instance
-func connectDB(dbPath string) (*sql.DB, error) {
-	// Open the SQLite database
-	db, err := sql.Open("sqlite3", dbPath)
+/*func pruneDockerSystem() error {
+	cmd := exec.Command("docker", "system", "prune", "-a", "-f")
+	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return nil, err
+		return fmt.Errorf("command execution failed: %w, output: %s", err, string(output))
 	}
-
-	// Verify the connection
-	if err = db.Ping(); err != nil {
-		db.Close() // Close the connection if Ping fails
-		return nil, err
-	}
-
-	return db, nil
-}
-
-// see korraks
-// getPost retrieves a post by its ID
-func getPost(db *sql.DB, postID int) (int, string, string, int, string, error) {
-	var id int
-	var title, text, created string
-	var userID, categoryID int
-
-	query := `SELECT id, user, title, text, category, created FROM post WHERE id = ?`
-	err := db.QueryRow(query, postID).Scan(&id, &userID, &title, &text, &categoryID, &created)
-	if err != nil {
-		return 0, "", "", 0, "", err
-	}
-
-	return id, title, text, categoryID, created, nil
-}
-
-// ------------------------------------ //*/
+	fmt.Printf("Docker system prune output: %s\n", string(output))
+	return nil
+}*/
