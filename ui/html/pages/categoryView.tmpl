@@ -1,30 +1,35 @@
-{{define "title"}}Home{{end}}
+{{define "title"}}Category View{{end}}
 
 {{define "main"}}
-<div class='snippet'>
+<div class="container">
+    <!-- Sidebar for Categories -->
+    <aside class='sidebar'>
+        <h3>Kategooriad</h3>
+        <ul>
+            {{range .Categories}}
+            <li>
+                {{.ID}} <strong><a href="/category/view/{{.ID}}">{{.Name}}</a></strong>
+            </li>
+            {{else}}
+            <p>There's nothing to see here... yet! Come back soon!</p>
+            {{end}}
+        </ul>
+    </aside>
 
-
-        <!-- Toggle the links based on authentication status -->
+    <!-- Main content for Posts -->
+    <div class='main-content'>
         {{if .IsAuthenticated}}
-    <!-- Add a link to the new form -->
-          <a href='/post/create/{{.CategoryID}}'>Create post</a>
+        <a href='/post/create/{{.CategoryID}}'>Create post</a>
         {{end}}
-    <!-- Hardcoded comment section -->
-    <!-- scc seest see class -->
-    <div class='comments'> 
+
         <h3>Postitused</h3>
         <ul>
             {{range .Posts}}
-            <!-- Nüüd võtab sealt -->
             <li>
-      
-                <!-- <p>{{.ID}}</p> -->
                 {{.ID}} <strong><a href="/post/view/{{.ID}}">{{.Title}}</a></strong>
             </li>
-        
             {{else}}
-            <!-- Kui kommentaare ei ole DB-s siis näeme seda -->
-            <p>There's nothing to see here... yet! Come back soon, darling!</p>
+            <p>There's nothing to see here... yet! Come back soon!</p>
             {{end}}
         </ul>
     </div>
