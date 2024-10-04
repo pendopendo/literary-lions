@@ -243,3 +243,90 @@ footer {
 .snippet .actions button {
     margin-right: 10px;
 }
+
+/* Container layout for categories and posts */
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+/* Sidebar for categories */
+.sidebar {
+    flex: 1; /* Sidebar takes 1/4 of the width */
+    max-width: 250px;
+    background-color: #F7F9FA;
+    border: 1px solid #E4E5E7;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.sidebar h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #34495E;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #62CB31;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #4EB722;
+    text-decoration: underline;
+}
+
+/* Main content for posts */
+.main-content {
+    flex: 3; /* Main content takes 3/4 of the width */
+    background-color: #FFFFFF;
+    border: 1px solid #E4E5E7;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+.main-content h3 {
+    margin-bottom: 18px;
+    font-size: 22px;
+    color: #34495E;
+}
+
+.main-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.main-content ul li {
+    padding: 18px;
+    border-bottom: 1px solid #E4E5E7;
+    background-color: #F7F9FA;
+    border-radius: 3px;
+    margin-bottom: 18px;
+}
+
+.main-content ul li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.main-content ul li a {
+    color: #34495E;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-content ul li a:hover {
+    color: #62CB31;
+}
