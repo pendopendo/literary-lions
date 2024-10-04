@@ -27,7 +27,7 @@ func InitSQLDB(db *sql.DB) {
 			post INTEGER NOT NULL,
 			text TEXT NOT NULL,
 			created TEXT NOT NULL,
-			FOREIGN KEY(users) REFERENCES users(id),
+			FOREIGN KEY(user) REFERENCES users(id),
 			FOREIGN KEY(post) REFERENCES post(id)
 		);
 	`)
@@ -44,7 +44,7 @@ func InitSQLDB(db *sql.DB) {
 			text TEXT NOT NULL,
 			category INTEGER NOT NULL,
 			created TEXT NOT NULL,
-			FOREIGN KEY(users) REFERENCES users(id),
+			FOREIGN KEY(user) REFERENCES users(id),
 			FOREIGN KEY(category) REFERENCES category(id)
 		);
 	`)
@@ -85,7 +85,7 @@ func InitSQLDB(db *sql.DB) {
 			user INTEGER NOT NULL,
 			FOREIGN KEY(comment) REFERENCES comment(id),
 			FOREIGN KEY(post) REFERENCES post(id),
-			FOREIGN KEY(users) REFERENCES users(id)
+			FOREIGN KEY(user) REFERENCES users(id)
 		);
 	`)
 	if err != nil {

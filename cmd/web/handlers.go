@@ -15,47 +15,59 @@ import (
 
 //handler võtab requesti sisse, teeb sellega midagi ja annab vastuse (osad ei tee req midagi)
 
+
+
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
-	//-----------   VANA   -----------------//
-	// kategooriad kuvamien ilma html
-	categories, err := app.categories.GetRow()
-	if err != nil {
-		app.serverError(w, r, err)
-		return
-	}
+    //-----------   MUUDATUSED SIIT ALATES   -----------------//
+    
+    // Kuvame kõik postitused olenemata kategooriast
+    posts, err := app.posts.GetAll() // Kutsume välja meetodi, mis tagastab kõik postitused
+    if err != nil {
+        app.serverError(w, r, err)
+        return
+    }
 
-	// Create an instance of a templateData struct holding the snippet data.
-	//seda hakkab siis html kasutama range kaudu
-	//saame tänu sellele anda nii post kui comment
-	data := templateData{
-		Categories:      categories,
-		IsAuthenticated: app.isAuthenticated(r),
-	}
+    // Kuvame kõik kategooriad
+    categories, err := app.categories.GetRow()
+    if err != nil {
+        app.serverError(w, r, err)
+        return
+    }
 
-	// Initialize a slice containing the paths to the view.tmpl file,
-	// plus the base layout and navigation partial that we made earlier.
-	files := []string{
-		"./ui/html/base.tmpl",
-		"./ui/html/partials/nav.tmpl",
-		"./ui/html/pages/home.tmpl",
-	}
+    // Create an instance of a templateData struct holding the snippet data.
+    //seda hakkab siis html kasutama range kaudu
+    //saame tänu sellele anda nii post kui comment
+    data := templateData{
+        Categories:      categories,
+        Posts:           posts, // Kõik postitused
+        IsAuthenticated: app.isAuthenticated(r),
+    }
 
-	// Parse the template files... loeb failid sisse
-	ts, err := template.ParseFiles(files...) // "..." see on 3 argumenti! Iga stringi rida see on nagu files[0], files[1], files[2] täppe kolm alati, see tähenda lihtsalt, et ta loeb jöärjest argumendid sise
-	if err != nil {
-		app.serverError(w, r, err)
-		return
-	}
+    // Initialize a slice containing the paths to the view.tmpl file,
+    // plus the base layout and navigation partial that we made earlier.
+    files := []string{
+        "./ui/html/base.tmpl",
+        "./ui/html/partials/nav.tmpl",
+        "./ui/html/pages/home.tmpl",
+    }
 
-	// And then execute them. Notice how we are passing in the snippet
-	// data (a models.Snippet struct) as the final parameter?
-	err = ts.ExecuteTemplate(w, "base", data)
-	if err != nil {
-		app.serverError(w, r, err)
-	}
+    // Parse the template files... loeb failid sisse
+    ts, err := template.ParseFiles(files...) // "..." see on 3 argumenti! Iga stringi rida see on nagu files[0], files[1], files[2] täppe kolm alati, see tähenda lihtsalt, et ta loeb jöärjest argumendid sise
+    if err != nil {
+        app.serverError(w, r, err)
+        return
+    }
+
+    // And then execute them. Notice how we are passing in the snippet
+    // data (a models.Snippet struct) as the final parameter?
+    err = ts.ExecuteTemplate(w, "base", data)
+    if err != nil {
+        app.serverError(w, r, err)
+    }
 
 }
+
 
 func (app *application) postView(w http.ResponseWriter, r *http.Request) { //http.Request - see tuleb sisse
 	id, err := strconv.Atoi(r.PathValue("id")) //konverdib strigni numbriks. URL sees olev ID

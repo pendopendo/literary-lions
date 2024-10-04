@@ -95,6 +95,46 @@ func (m *PostModel) Get() ([]Post, error) {
 	return posts, nil
 }
 
+
+
+
+// GetAll returns all posts from the database, regardless of category.
+func (m *PostModel) GetAll() ([]Post, error) {
+	statement := `SELECT id, user, title, text, category, created FROM post ORDER BY created DESC`
+	rows, err := m.DB.Query(statement)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []Post
+
+	for rows.Next() {
+		var s Post
+		var userID int
+		err := rows.Scan(&s.ID, &userID, &s.Title, &s.Text, &s.Category, &s.Created)
+		if err != nil {
+			return nil, err
+		}
+
+		users := &UserModel{DB: m.DB}
+		s.User, err = users.Get(userID)
+		if err != nil {
+			return nil, err
+		}
+
+		posts = append(posts, s)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}
+
+
+
 func (m *PostModel) GetRow(id int) (Post, error) {
 	// Write the SQL statement we want to execute.
 	statement := `SELECT id, user, title, text, category, created FROM post where ID=?`

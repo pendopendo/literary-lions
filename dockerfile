@@ -33,7 +33,6 @@ VOLUME /app/data
 
 # Copy the pre-built binary file and initialized database from the builder stage
 COPY --from=builder /app/web .
-COPY --from=builder /app/literarylionforum.db /app/data/literarylionforum.db
 COPY --from=builder /app/ui/html ./ui/html
 COPY --from=builder /app/ui/static ./ui/static
 
