@@ -292,28 +292,6 @@ func (app *application) categoryView(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	// Use the categoryModel's Get() method to retrieve the data for a
-	// specific record based on its ID. If no matching record is found,
-	// return a 404 Not Found response.
-	/*
-		category, err := app.categories.GetRow()
-		if err != nil {
-			if errors.Is(err, models.ErrNoRecord) {
-				http.NotFound(w, r)
-			} else {
-				app.serverError(w, r, err)
-			}
-			return
-		}
-
-		// Write the category data as a plain-text HTTP response body.
-		fmt.Fprintf(w, "KATS: %+v", category)
-
-	*/
-
-	//SIIN PROOVIN  KOKKU PANNA
-
-	//fmt.Fprintf(w, "Display a specific post with ID %d...", id)
 
 	post, err := app.posts.GetPostsForCategory(id)
 	if err != nil {
@@ -325,27 +303,15 @@ func (app *application) categoryView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// //MUDELIGA SUHTLUS
-	// comments, err := app.comments.GetCommentsForPost(id) // app.comments - sID 240928_184230 sealt
-	// if err != nil {
-	// 	if errors.Is(err, models.ErrNoRecord) {
-	// 		http.NotFound(w, r)
-	// 	} else {
-	// 		app.serverError(w, r, err)
-	// 	}
-	// 	return
-	// }
+	categories, err := app.categories.GetRow()
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
 
-	// Assuming 'post' is a slice containing the posts
-	// for _, p := range post {
-	// 	fmt.Fprintf(w, "Postitus: %v\n", p)
-	// }
-
-	// Create an instance of a templateData struct holding the snippet data.
-	//seda hakkab siis html kasutama range kaudu
-	//saame tänu sellele anda nii post kui comment
 	data := templateData{
 		CategoryID:      id,
+		Categories:      categories,
 		Posts:           post,
 		IsAuthenticated: app.isAuthenticated(r),
 	}

@@ -11,7 +11,7 @@
                 {{.ID}} <strong><a href="/category/view/{{.ID}}">{{.Name}}</a></strong>
             </li>
             {{else}}
-            <p>There's nothing to see here... yet! Come back soon!</p>
+            <p>No categories available</p>
             {{end}}
         </ul>
     </aside>
@@ -22,7 +22,7 @@
         <a href='/post/create/{{.CategoryID}}'>Create post</a>
         {{end}}
 
-        <h3>Postitused</h3>
+        <h3>{{.Categories}} Postitused</h3>
         <ul>
             {{range .Posts}}
             <li>
